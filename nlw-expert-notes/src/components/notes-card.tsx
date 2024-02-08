@@ -5,12 +5,15 @@ import {X} from 'lucide-react'
 
 interface NoteCardProps{
   note:{
+    id: string
     date: Date
     content: string
   }
+  onDeletedNotes: (id:string) => void
 }
 
-export function NotesCard({note}: NoteCardProps){
+
+export function NotesCard({note, onDeletedNotes}: NoteCardProps){
   return(
     <Dialog.Root>
       <Dialog.Trigger className="rounded-md text-left bg-slate-800 p-5 overflow-hidden flex flex-col gap-3 relative hover:ring-2 outline-none ring-slate-600 focus-visible:ring-2 focus-visible:ring-lime-400">
@@ -22,7 +25,7 @@ export function NotesCard({note}: NoteCardProps){
 
       <Dialog.Portal>
         <Dialog.Overlay className='inset-0 fixed bg-black/50'/>
-        <Dialog.Content className='fixed overflow-hidden left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[60vh] max-w-[640px] w-full bg-slate-700 rounded-md flex flex-col outline-none'>
+        <Dialog.Content className='fixed overflow-hidden inset-0 md:inset-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2 md:h-[60vh] md:max-w-[640px] w-full bg-slate-700 md:rounded-md flex flex-col outline-none'>
          <Dialog.Close className='absolute right-0 top-0 bg-slate-800 p-1.5 text-slate-400 hover:text-slate-100'>
             <X className='size-5'/>
          </Dialog.Close>
@@ -31,7 +34,7 @@ export function NotesCard({note}: NoteCardProps){
             <p className="text-sm leading-6 text-slate-400">{note.content}</p>
           </div>
 
-          <button type='button' className='w-full font-medium bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none group'>
+          <button type='button' onClick={()=> onDeletedNotes(note.id)} className='w-full font-medium bg-slate-800 py-4 text-center text-sm text-slate-300 outline-none group'>
             Deseja <span className='text-red-400 group-hover:underline'>Apagar essa nota</span>?
           </button>
         </Dialog.Content>
